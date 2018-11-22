@@ -11,6 +11,7 @@ module.exports.login = passport.authenticate('local', { successReturnToOrRedirec
 
 module.exports.logout = (request, response) => {
   request.logout();
+  console.log('logout')
   response.redirect('/');
 };
 

@@ -46,8 +46,9 @@ server.deserializeClient((id, done) => {
 // values, and will be exchanged for an access token.
 
 server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
+  console.log(client)
   const code = utils.getUid(16);
-  db.authorizationCodes.save(code, client.id, redirectUri, user.id, (error) => {
+  db.authorizationCodes.save(code, client.clientId, redirectUri, user.id, (error) => {
     if (error) return done(error);
     return done(null, code);
   });
@@ -76,7 +77,7 @@ server.grant(oauth2orize.grant.token((client, user, ares, done) => {
 server.exchange(oauth2orize.exchange.code((client, code, redirectUri, done) => {
   db.authorizationCodes.find(code, (error, authCode) => {
     if (error) return done(error);
-    if (client.id !== authCode.clientId) return done(null, false);
+    if (client.clientId !== authCode.clientId) return done(null, false);
     if (redirectUri !== authCode.redirectUri) return done(null, false);
     
     const token = utils.getUid(256);
@@ -94,6 +95,7 @@ server.exchange(oauth2orize.exchange.code((client, code, redirectUri, done) => {
 
 server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
   // Validate the client
+  console.log('client' + client)
   db.clients.findByClientId(client.clientId, (error, localClient) => {
     if (error) return done(error);
     if (!localClient) return done(null, false);
@@ -107,6 +109,7 @@ server.exchange(oauth2orize.exchange.password((client, username, password, scope
       const token = utils.getUid(256);
       db.accessTokens.save(token, user.id, client.clientId, (error) => {
         if (error) return done(error);
+       
         return done(null, token);
       });
     });
@@ -150,10 +153,13 @@ server.exchange(oauth2orize.exchange.clientCredentials((client, scope, done) => 
 // authorization). We accomplish that here by routing through `ensureLoggedIn()`
 // first, and rendering the `dialog` view.
 
+
+
 module.exports.authorization = [
   login.ensureLoggedIn(),
   server.authorization((clientId, redirectUri, done) => {
     db.clients.findByClientId(clientId, (error, client) => {
+      console.log('findbyclientID')
       if (error) return done(error);
       // WARNING: For security purposes, it is highly advisable to check that
       //          redirectUri provided by the client matches one registered with
@@ -163,12 +169,13 @@ module.exports.authorization = [
     });
   }, (client, user, done) => {
     // Check if grant request qualifies for immediate approval
-    
+   
     // Auto-approve
-    if (client.isTrusted) return done(null, true);
+    if (true) return done(null, true);
     
     db.accessTokens.findByUserIdAndClientId(user.id, client.clientId, (error, token) => {
       // Auto-approve
+      console.log('findByUserIdAndClientId')
       if (token) return done(null, true);
       
       // Otherwise ask user
@@ -205,3 +212,4 @@ exports.token = [
   server.token(),
   server.errorHandler(),
 ];
+

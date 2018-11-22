@@ -1,15 +1,16 @@
-<form action="/login" method="post">
-	<div>
-  	<label>Username:</label>
-  	<input type="text" name="username" /><br/>
-	</div>
-	<div>
-  	<label>Password:</label>
-  	<input type="password" name="password" />
-	</div>
-	<div>
-	  <input type="submit" value="Submit" />
-	</div>
+<link href="/style.css" rel="stylesheet" type="text/css">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+<div class="container">
+	<div class="card card-container">
+<form  class="form-signin" action="/login" method="post">
+	
+	
+		<input type="text" name="username" id="inputEmail" class="form-control" placeholder="Kullanıcı Adı" required autofocus>
+  	<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Şifre" required/>
+		<button  class="btn btn-lg btn-primary btn-block btn-signin"  type="submit" value="Onayla" > Onayla</button>
 </form>
-<p><small>Hint - bob:secret</small></p>
-<p><small>Hint - joe:password</small></p>
+
+</div>
+</div>

@@ -1,11 +1,27 @@
-<p>Hi <%= user.name %>!</p>
-<p><b><%= client.name %></b> is requesting access to your account.</p>
-<p>Do you approve?</p>
+<link href="/style.css" rel="stylesheet" type="text/css">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
-<form action="/dialog/authorize/decision" method="post">
-  <input name="transaction_id" type="hidden" value="<%= transactionId %>" />
-  <div>
-    <input type="submit" value="Allow" id="allow" />
-    <input type="submit" value="Deny" name="cancel" id="deny" />
+<div class="container">
+  <div class="card card-container">
+
+    <p>Merhaba 
+      <%= user.name %>!</p>
+    <p><b>
+        <%= client.name %></b> hesabınıza giriş izni istiyor.</p>
+    <p>Kabul ediyor musunuz?</p>
+
+    <form action="/dialog/authorize/decision" method="post">
+      <input name="transaction_id"  type="hidden" value="<%= transactionId %>" />
+      <div class="row">
+        <div class="col col-sm-6">
+            <button class="btn btn-block btn-primary "  type="submit" value="İzin ver" id="allow" >İzin Ver</button>
+          </div>
+          <div class="col col-sm-6">
+              <button  class="btn btn-block btn-danger " type="submit" value="Reddet" name="cancel" id="deny">Reddet</button>
+            </div>
+      </div>
+    </form>
+
   </div>
-</form>
+</div>
