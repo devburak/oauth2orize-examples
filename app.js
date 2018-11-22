@@ -43,4 +43,4 @@ app.post('/api/createuser',routes.user.create);
 
 const port = process.env.PORT || 3000
 app.listen(port);
-console.log('start at : 127.0.0.1/' + port);
+console.log('start at : 127.0.0.1:' + port);

@@ -1,5 +1,5 @@
 'use strict';
-
+var data = require('../db/dbConnection');
 const users = [
   {
       id: 'eb0d9217-6c31-MYDI-b976-0fc9c6477adf',
@@ -28,15 +28,22 @@ const users = [
 ]
 
 module.exports.findById = (id, done) => {
-  for (let i = 0, len = users.length; i < len; i++) {
-    if (users[i].id === id) return done(null, users[i]);
-  }
-  return done(new Error('User Not Found'));
+
+  data.query('Select * FROM users Where id = ?' , id, function(err,response){
+    if(err)  return done(new Error('User Not Found'));
+    if(!response.length)  return done(new Error('User Not Found'));
+    return done(null, response[0]);
+
+  })
+
 };
 
 module.exports.findByUsername = (username, done) => {
-  for (let i = 0, len = users.length; i < len; i++) {
-    if (users[i].username === username) return done(null, users[i]);
-  }
-  return done(new Error('User Not Found'));
+
+  data.query('Select * FROM users Where username = ?' , username, function(err,response){
+    if(err)  return done(new Error('User Not Found'));
+    if(!response.length)  return done(new Error('User Not Found'));
+    return done(null, response[0]);
+
+  })
 };

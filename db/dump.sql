@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
-  `role` varchar(20) COLLATE utf8_unicode_ci NOT NULL
+  `role` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 COMMIT;
 

@@ -1,20 +1,6 @@
 'use strict';
 var data = require('../db/dbConnection');
 
-const clients = [
-  {
-    id:'1',
-     clientId:'3edef99c-7512-M4CI-82e5-ece6c4206c7f',
-      name: 'app',
-      clientSecret:'14efe9b341cd-ac469366fb6abb4b'
-  },
-  {
-    id:'2',
-     clientId:'3edeD99c-7512-M4CI-82e5-ecew54206c7f',
-      name: 'Müllkiyeliler Birliği',
-      clientSecret:'14efe9b341cd-ac469366fb6cvb4b'
-  }
-]
 
 module.exports.findById = (id, done) => {
 
