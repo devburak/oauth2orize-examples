@@ -19,7 +19,7 @@ module.exports.find = (key, done) => {
 module.exports.save = (code, clientId, redirectUri, userId, done) => {
 
   data.query('select * from codes where userId = ? and clientId = ? and redirectUri = ?', [userId, clientId, redirectUri], function (err, res) {
-    console.log(this.sql)
+ 
     if (err) return done(new Error('code set fail'));
     if (res.length > 0) {
 
@@ -30,6 +30,7 @@ module.exports.save = (code, clientId, redirectUri, userId, done) => {
     }
     else {
       data.query('INSERT INTO codes SET ?', { code: code, userId: userId, clientId: clientId, redirectUri: redirectUri }, function (err, response) {
+        
         if (err) { return done(new Error('token set fail')); }
         done();
       })

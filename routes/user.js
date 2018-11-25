@@ -18,7 +18,6 @@ module.exports.info = [
 module.exports.create = [
   passport.authenticate('bearer', { session: false }),
   (request, response) => {
-    console.log('create')
     var dtStr = Date.now().toString(36)
     var user_id =  utils.getUid(4)  + utils.getUid(4) + '-'+  dtStr.slice(4) + '-' + dtStr.slice(0,4) + '-' +utils.getUid(4) + '-'  + utils.getUid(12);
     db.users.newUser(user_id,request.body,(error) => {

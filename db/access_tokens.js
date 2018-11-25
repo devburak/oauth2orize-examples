@@ -4,6 +4,7 @@ var data = require('../db/dbConnection');
 
 module.exports.find = (key, done) => {
   data.query('Select * FROM tokens where token = ?' , key,function(err,response){
+    console.log(this.sql)
     if(err){ return done(new Error('Token Not Found'));}
     if(!response.length) return done(new Error('Token Not Found'));
     const token = {'userId':response[0].userId, 'clientId':response[0].clientId}
@@ -28,11 +29,15 @@ module.exports.findByUserIdAndClientId = (userId, clientId, done) => {
 
 
 module.exports.save = (token, userId, clientId, done) => {
+  console.log(token)
+  console.log('here')
   data.query('select * from tokens where userId = ? and clientId = ?', [userId, clientId], function (err, res) {
+    console.log(this.sql)
     if (err) return done(new Error('token set fail'));
     if (res.length > 0) {
 
       data.query('Update tokens SET ? where userId = ? and clientId = ?', [{ token: token }, userId, clientId], function (err, response) {
+        console.log(this.sql)
 
         if (err) { return done(new Error('token set fail')); }
 
@@ -41,7 +46,8 @@ module.exports.save = (token, userId, clientId, done) => {
     }
     else {
       data.query('INSERT INTO tokens SET ?', { token: token, userId: userId, clientId: clientId }, function (err, response) {
-        if (err) { return done(new Error('token set fail')); }
+        console.log(this.sql)
+        if (err) { return done(new Error('token set fail'));}
 
         done();
       })

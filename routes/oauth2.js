@@ -46,7 +46,6 @@ server.deserializeClient((id, done) => {
 // values, and will be exchanged for an access token.
 
 server.grant(oauth2orize.grant.code((client, redirectUri, user, ares, done) => {
-  console.log(client)
   const code = utils.getUid(16);
   db.authorizationCodes.save(code, client.clientId, redirectUri, user.id, (error) => {
     if (error) return done(error);
@@ -171,11 +170,10 @@ module.exports.authorization = [
     // Check if grant request qualifies for immediate approval
    
     // Auto-approve
-    if (true) return done(null, true);
+    if (true) return done(null, true); // buraya bak
     
     db.accessTokens.findByUserIdAndClientId(user.id, client.clientId, (error, token) => {
       // Auto-approve
-      console.log('findByUserIdAndClientId')
       if (token) return done(null, true);
       
       // Otherwise ask user
