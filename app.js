@@ -37,6 +37,8 @@ app.post('/dialog/authorize/decision', routes.oauth2.decision);
 
 app.post('/oauth/token', routes.oauth2.token);
 
+app.post('/logout',routes.oauth2.tokendelete);
+
 app.get('/api/userinfo', routes.user.info);
 app.get('/api/clientinfo', routes.client.info);
 app.post('/api/createuser',routes.user.create);

@@ -94,7 +94,6 @@ server.exchange(oauth2orize.exchange.code((client, code, redirectUri, done) => {
 
 server.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
   // Validate the client
-  console.log('client' + client)
   db.clients.findByClientId(client.clientId, (error, localClient) => {
     if (error) return done(error);
     if (!localClient) return done(null, false);
@@ -170,7 +169,7 @@ module.exports.authorization = [
     // Check if grant request qualifies for immediate approval
    
     // Auto-approve
-    if (true) return done(null, true); // buraya bak
+    // if (true) return done(null, true); // buraya bak
     
     db.accessTokens.findByUserIdAndClientId(user.id, client.clientId, (error, token) => {
       // Auto-approve
@@ -198,6 +197,7 @@ exports.decision = [
 ];
 
 
+
 // Token endpoint.
 //
 // `token` middleware handles client requests to exchange authorization grants
@@ -211,3 +211,12 @@ exports.token = [
   server.errorHandler(),
 ];
 
+exports.tokendelete = [
+  passport.authenticate('bearer', { session: false }),
+  (request, response) =>{
+  db.accessTokens.delete(request.query.access_token,(error, token) => {
+    if(error) response.status(400).send(error)
+    response.status(200).send('logout');
+  })
+ }
+]
