@@ -3,7 +3,7 @@ var data = require('../db/dbConnection');
 
 module.exports.findById = (id, done) => {
 
-  data.query('Select * FROM users Where id = ?' , id, function(err,response){
+  data.query('Select users.*,lookup.clientId from users RIGHT JOIN lookup on users.id = lookup.userId where users.id = ?' , id, function(err,response){
     if(err)  return done(new Error('User Not Found'));
     if(!response.length)  return done(new Error('User Not Found'));
     return done(null, response[0]);
@@ -14,7 +14,7 @@ module.exports.findById = (id, done) => {
 
 module.exports.findByUsername = (username, done) => {
 
-  data.query('Select * FROM users Where username = ?' , username, function(err,response){
+  data.query('Select users.*,lookup.clientId from users RIGHT JOIN lookup on users.id = lookup.userId where users.username = ?' , username, function(err,response){
     if(err)  return done(new Error('User Not Found'));
     if(!response.length)  return done(new Error('User Not Found'));
     return done(null, response[0]);

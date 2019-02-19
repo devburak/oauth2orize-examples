@@ -12,6 +12,7 @@ const db =require('./db');
 
 // Express configuration
 const app = express();
+// var cors = require('cors');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(cookieParser());
@@ -21,6 +22,8 @@ app.use(errorHandler());
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// var allowedOrigins = ['http://localhost:5005','http://127.0.0.1:5005'];
 
 // Passport configuration
 require('./auth');
@@ -43,6 +46,6 @@ app.get('/api/userinfo', routes.user.info);
 app.get('/api/clientinfo', routes.client.info);
 app.post('/api/createuser',routes.user.create);
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3002
 app.listen(port);
 console.log('start at : 127.0.0.1:' + port);

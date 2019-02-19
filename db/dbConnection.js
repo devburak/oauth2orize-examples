@@ -7,10 +7,12 @@ const connection = mysql.createConnection({
   password : '',
   database : 'oauth',
   port: 3302,
-  "dateStrings": true
-  //connectTimeout: 100000
+  // "dateStrings": true,
+  // connectTimeout: 100000
 });
 
 //console.log(connection.state )
-//connection.connect();
+// connection.connect();
 module.exports=connection;
+
+

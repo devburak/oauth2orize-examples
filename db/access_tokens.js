@@ -4,6 +4,7 @@ var data = require('../db/dbConnection');
 
 module.exports.find = (key, done) => {
   data.query('Select * FROM tokens where token = ?' , key,function(err,response){
+    console.log(this.sql)
     if(err){ return done(new Error('Token Not Found'));}
     if(!response.length) return done(new Error('Token Not Found'));
     const token = {'userId':response[0].userId, 'clientId':response[0].clientId}
@@ -59,6 +60,6 @@ module.exports.delete = (token, done) =>{
   data.query('delete from tokens where token = ? ',token,function(err,response){
     console.log(this.sql)
     if (err) return done(new Error('token set fail'));
-    done();
+    done(null,true);
   })
 }
